@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: prop-ease
+  config:
+    # External values override this base configuration without rebuilding the application.
+    import: optional:file:${APP_OVERRIDE_FILE:D:/JAVA/prop-ease/application-override.yaml}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/rentaldb}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 50MB
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:1025}
+    username: ${SMTP_USERNAME:no-reply@prop-ease.local}
+    password: ${SMTP_PASSWORD:}
+    properties.mail.smtp:
+      auth: ${SMTP_AUTH:false}
+      starttls.enable: ${SMTP_STARTTLS:false}
+server:
+  port: ${SERVER_PORT:8080}
+app:
+  jwt:
+    secret: 'your-secure-secret-at-least-32-characters'
+    access-expiration-ms: ${JWT_ACCESS_EXPIRATION_MS:900000}
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS:604800000}
+  images:
+    directory: ${IMAGE_DIRECTORY:uploads}
+    base-url: ${IMAGE_BASE_URL:http://localhost:8080/uploads}
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
